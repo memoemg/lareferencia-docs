@@ -20,21 +20,23 @@ La ejecución de las siguientes instrucciones debe realizarse identificado como 
 Creación del usuario “lareferencia” para el sistema operativo
 -------------------------------------------------------------
 
-adduser lareferencia | bash
+.. code-block:: console
+adduser lareferencia
 
 El sistema operativo solicitará la contraseña, su confirmación y algunos datos:
 
-Enter new UNIX password: ***** | bash
-Retype new UNIX password: ***** | bash
-passwd: password updated successfully | bash
-... | bash
-Enter the new value, or press ENTER for the default | bash
-        Full Name []: LA Referencia | bash
-        Room Number []:  | bash
-        Work Phone []:  | bash
-        Home Phone []: | bash
-        Other []: | bash
-Is the information correct? [Y/n] y | bash
+.. code-block:: console
+Enter new UNIX password: *****
+Retype new UNIX password: *****
+passwd: password updated successfully
+...
+Enter the new value, or press ENTER for the default
+        Full Name []: LA Referencia
+        Room Number []:
+        Work Phone []:
+        Home Phone []:
+        Other []:
+Is the information correct? [Y/n] y
 
 Instalación de Git
 ------------------
