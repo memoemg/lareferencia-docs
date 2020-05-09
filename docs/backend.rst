@@ -1,5 +1,3 @@
-.. highlight:: shell
-
 Backend (cosechador LAReferencia)
 =================================
 
@@ -22,6 +20,7 @@ Creación del usuario “lareferencia” para el sistema operativo
 
 .. code-block:: console
 adduser lareferencia
+..
 
 El sistema operativo solicitará la contraseña, su confirmación y algunos datos:
 
@@ -29,7 +28,6 @@ El sistema operativo solicitará la contraseña, su confirmación y algunos dato
 Enter new UNIX password: *****
 Retype new UNIX password: *****
 passwd: password updated successfully
-...
 Enter the new value, or press ENTER for the default
         Full Name []: LA Referencia
         Room Number []:
@@ -37,6 +35,7 @@ Enter the new value, or press ENTER for the default
         Home Phone []:
         Other []:
 Is the information correct? [Y/n] y
+..
 
 Instalación de Git
 ------------------
