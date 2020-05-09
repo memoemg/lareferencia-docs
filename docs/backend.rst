@@ -25,8 +25,8 @@ adduser lareferencia
 El sistema operativo solicitará la contraseña, su confirmación y algunos datos:
 
 .. code-block:: console
-Enter new UNIX password: *****
-Retype new UNIX password: *****
+Enter new UNIX password: 
+Retype new UNIX password: 
 passwd: password updated successfully
 Enter the new value, or press ENTER for the default
 Full Name []: LA Referencia
