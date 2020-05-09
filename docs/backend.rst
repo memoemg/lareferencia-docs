@@ -1,3 +1,5 @@
+.. highlight:: shell
+
 Backend (cosechador LAReferencia)
 =================================
 
@@ -11,11 +13,12 @@ Requerimientos
 * Apache Tomcat 8.0.X
 * Apache Maven
 
-Instrucciones para Ubuntu 18.04.2 LTS
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Instalación en Ubuntu 18.04.2 LTS
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 La ejecución de las siguientes instrucciones debe realizarse identificado como usuario “root”.
 
-Creación del usuario “lareferencia” para el sistema operativo 
+Creación del usuario “lareferencia” para el sistema operativo
+-------------------------------------------------------------
 
 adduser lareferencia
 
@@ -33,8 +36,8 @@ Enter the new value, or press ENTER for the default
         Other []:
 Is the information correct? [Y/n] y
 
-
 Instalación de Git
+------------------
 El código del software LAReferencia se encuentra en un repositorio versionado Git.  Por ello para poder acceder al código fuente se debe instalar Git en el sistema operativo.
 
 sudo apt-get update
@@ -45,6 +48,7 @@ Para corroborar la correcta instalación puede ejecutarse
 git --version
 
 Instalación del JDK 8
+---------------------
 Dado que durante la instalación del software LAReferencia es requerida la compilación del código fuente, se requiere instalar el JDK.
 
 sudo apt-get install openjdk-8-jdk
@@ -58,14 +62,10 @@ Se procede a establecer la variable de entorno “JAVA_HOME”.
 sudo sh -c 'echo export JAVA_HOME=\"/usr/lib/jvm/java-8-openjdk-amd64\" > /home/lareferencia/.bash_profile'
 
 Instalación de PostgreSQL
+-------------------------
 El software LAReferencia utiliza PostgreSQL como base de datos relacional para almacenar la configuración del “backend”, los datos de los repositorios cosechados y los resultados de las cosechas.
 
 sudo apt install postgresql 
-
-*Instalar mediante apt, instaló la versión 10.
-
-
-
 
 Una vez instalado el gestor de bases de datos, se procede a la creación del usuario “lrharvester”
 
@@ -82,6 +82,7 @@ Siempre logueado como postgres, se crea la base de datos “lrharvester” con e
 createdb -O lrharvester lrharvester
 
 Instalación de Apache Maven
+---------------------------
 El software LAReferencia requiere de la herramienta Apache Maven para automatizar las tareas de compilación y construcción de las aplicaciones java.  Mediante Maven se descargan e instalan las dependencias necesarias para la correcta compilación de las aplicaciones java.
 
 apt-get install maven
@@ -90,15 +91,11 @@ Para corroborar la correcta instalación puede ejecutarse
 
 mvn -version 
 
-*Instalar mediante apt, instaló la versión 3.6.0.
-
 Instalación de Apache Tomcat 8
+------------------------------
 Las aplicaciones java del software LAReferencia, requieren de un contenedor de servlets para poder desplegarse en un servidor web.  Por ello debe instalarse Tomcat 8.
 
 apt-get install tomcat8
-
-
-
 
 Dado que uno de los servicios del software LAReferencia debe utilizar el puerto 8080, es necesario cambiar el puerto de conexión por defecto de Tomcat (8080) por el 8090.  Esto se realiza en el archivo /etc/tomcat8/server.xml
 
@@ -112,12 +109,14 @@ Es necesario configurar el uso de la memoria para Apache Tomcat.  Esto se realiz
 JAVA_OPTS =”-Djava.awt.headless=true -Xmx2048m -XX:+UseConcMarkSweepGC -XX:+CMSIncrementalMode”
 
 Descarga del código fuente de LAReferencia
+------------------------------------------
 Ubicarse en la carpeta /home/lareferencia y ejecutar lo siguiente:
 
 git clone https://github.com/lareferencia/lrharvester.git
 
-Instalación del “backend”
-El “backend” es el módulo del software LAReferencia específico para la cosecha, validación y transformación de metadatos.
+Instalación del backend
+-----------------------
+El backend es el módulo del software LAReferencia específico para la cosecha, validación y transformación de metadatos.
 
 En el archivo /home/lareferencia/lrharvester/backend/pom.xml se cambia de manera temporal el packaging de “jar” por “war”
 
@@ -130,7 +129,6 @@ En el archivo /home/lareferencia/lrharvester/backend/pom.xml se cambia de manera
 Seguidamente en la carpeta /home/lareferencia/lrharvester/backend/etc.lrharvester, se copia el archivo “backend.properties.model” como “backend.properties”.
 
 cp backend.properties.model backend.properties
-
 
 En el archivo backend.properties se editan los datos para la conexión a la base de datos creada previamente
 
@@ -161,20 +159,15 @@ Para corroborar la correcta instalación del backend, se inicia el tomcat.
 Y se ingresa en el explorador http://localhost:8090/backend.
 
 Importación del validador y las reglas de validación
+----------------------------------------------------
 Obtener desde el repositorio de documentación los archivos .sql correspondientes
 
 git clone https://github.com/lareferencia/lareferencia-docs.git
 
-
 En la carpeta “Tablas para el backend” se encuentran los archivos: “validator.sql”, “validatorrule.sql”, “transformer.sql” y “transformerrule.sql”.  Los primeros 2 corresponden a las tablas del validador y sus reglas.  Los últimos 2 corresponden a las tablas del transformador y sus reglas.
 
-Para importar el validador ejecutar lo siguiente:
-
-su postgres
-psql lrharvester < validator.sql
-psql lrharvester < validatorrule.sql
-
 Importación del transformador y las reglas de transformación
+------------------------------------------------------------
 
 Para importar el transformador ejecutar lo siguiente, siempre identificado como usuario postgres:
 
