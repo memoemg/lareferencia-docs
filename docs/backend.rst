@@ -3,17 +3,18 @@ Backend (cosechador LAReferencia)
 
 Requerimientos
 ~~~~~~~~~~~~~~
-*Acceso al repositorio de código https://github.com/lareferencia/lrharvester
-*Acceso al repositorio de código https://github.com/lareferencia/lareferencia-docs
-*Git
-*Java JDK 8
-*PostgreSQL
-*Apache Tomcat 8.0.X
-*Apache Maven
+* Acceso al repositorio de código https://github.com/lareferencia/lrharvester
+* Acceso al repositorio de código https://github.com/lareferencia/lareferencia-docs
+* Git
+* Java JDK 8
+* PostgreSQL
+* Apache Tomcat 8.0.X
+* Apache Maven
 
 Instrucciones para Ubuntu 18.04.2 LTS
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-*La ejecución de las siguientes instrucciones debe realizarse identificado como usuario “root”.
+La ejecución de las siguientes instrucciones debe realizarse identificado como usuario “root”.
+
 Creación del usuario “lareferencia” para el sistema operativo 
 
 adduser lareferencia
