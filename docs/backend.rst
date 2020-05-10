@@ -18,7 +18,12 @@ La ejecución de las siguientes instrucciones debe realizarse identificado como 
 Creación del usuario “lareferencia” para el sistema operativo
 -------------------------------------------------------------
 
-.. code-block:: console
+The following is a SQL statement.
+
+.. code-block:: sql
+   :linenos:
+
+   SELECT * FROM mytable
 
 adduser lareferencia
 
