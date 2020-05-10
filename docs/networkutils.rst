@@ -1,6 +1,10 @@
 Networkutils (utilitario para modificar redes por lotes)
 ========================================================
 
+
+Instalación Ubuntu 18.04.2 LTS
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 En el directorio /home/lareferencia/lrharvester/networkutils/src/main/resources abrir el archivo application.properties.
 
 En este archivo deben configurarse los datos para la conexión con la base de datos
