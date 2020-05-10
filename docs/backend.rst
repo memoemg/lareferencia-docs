@@ -13,7 +13,7 @@ Requerimientos
 
 Instalación en Ubuntu 18.04.2 LTS
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-La ejecución de las siguientes instrucciones debe realizarse identificado como usuario “root”.
+NOTA: La ejecución de las siguientes instrucciones debe realizarse identificado como usuario “root”.
 
 Creación del usuario “lareferencia” para el sistema operativo
 -------------------------------------------------------------
