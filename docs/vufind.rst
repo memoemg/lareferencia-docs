@@ -19,7 +19,9 @@ Instalación de PHP
 
 Instalación de los módulos php requeridos por vufind
 ----------------------------------------------------
-sudo apt-get install php-mbstring php-pear php-dev php-gd php-intl php-json php-ldap php-xml php-soap php-curl php-pgsql php-mysql
+.. code-block:: console
+
+ sudo apt-get install php-mbstring php-pear php-dev php-gd php-intl php-json php-ldap php-xml php-soap php-curl php-pgsql php-mysql
 
 El servidor Apache debe reiniciarse
 
