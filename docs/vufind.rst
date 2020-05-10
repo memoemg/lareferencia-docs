@@ -173,3 +173,7 @@ Se pone en ejecución el solr con el usuario “lareferencia”
 Para corroborar la correcta instalación de vufind, ingresar en el explorador http://localhost/vufind.
 
 Continuar con el asistente de instalación en http://localhost/vufind/install
+
+Tareas de mantenimiento
+~~~~~~~~~~~~~~~~~~~~~~~
+.. include:: vufind_maintenance.rst
