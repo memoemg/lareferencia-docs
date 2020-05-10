@@ -170,13 +170,13 @@ En el archivo backend.properties se editan los datos para la conexión a la base
 
 .. code-block:: console
 
-#db config
-db.engine=postgres
-db.host=localhost
-db.name=lrharvester
-db.user=lrharvester
-db.passwd=*****
-db.port=5432
+   #db config
+   db.engine=postgres
+   db.host=localhost
+   db.name=lrharvester
+   db.user=lrharvester
+   db.passwd=*****
+   db.port=5432
 
 Se genera un enlace simbólico en /etc apuntando a la carpeta /home/lareferencia/lrharvester/backend/etc.lrharvester
 
