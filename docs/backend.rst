@@ -21,12 +21,8 @@ Creación del usuario “lareferencia” para el sistema operativo
 The following is a SQL statement.
 
 .. code-block:: sql
-   :linenos:
 
-   SELECT * FROM mytable
-
-adduser lareferencia
-
+   adduser lareferencia
 
 El sistema operativo solicitará la contraseña, su confirmación y algunos datos:
 
