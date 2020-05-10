@@ -223,3 +223,7 @@ Para importar el transformador ejecutar lo siguiente, siempre identificado como 
 
    psql lrharvester < validator.sql
    psql lrharvester < validatorrule.sql
+   
+Tareas de mantenimiento
+~~~~~~~~~~~~~~~~~~~~~~~
+.. include:: backend_maintenance .rst
