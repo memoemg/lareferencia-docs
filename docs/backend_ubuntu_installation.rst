@@ -3,8 +3,6 @@ NOTA: La ejecución de las siguientes instrucciones debe realizarse identificado
 Creación del usuario “lareferencia” para el sistema operativo
 -------------------------------------------------------------
 
-The following is a SQL statement.
-
 .. code-block:: console
 
    adduser lareferencia
