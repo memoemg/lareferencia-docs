@@ -19,12 +19,14 @@ Creación del usuario “lareferencia” para el sistema operativo
 -------------------------------------------------------------
 
 .. code-block:: console
+
 adduser lareferencia
 
 
 El sistema operativo solicitará la contraseña, su confirmación y algunos datos:
 
 .. code-block:: console
+
 Enter new UNIX password: 
 Retype new UNIX password: 
 passwd: password updated successfully
@@ -41,16 +43,22 @@ Instalación de Git
 ------------------
 El código del software LAReferencia se encuentra en un repositorio versionado Git.  Por ello para poder acceder al código fuente se debe instalar Git en el sistema operativo.
 
+.. code-block:: console
+
 sudo apt-get update
 sudo apt-get install git
 
 Para corroborar la correcta instalación puede ejecutarse
+
+.. code-block:: console
 
 git --version
 
 Instalación del JDK 8
 ---------------------
 Dado que durante la instalación del software LAReferencia es requerida la compilación del código fuente, se requiere instalar el JDK.
+
+.. code-block:: console
 
 sudo apt-get install openjdk-8-jdk
 
