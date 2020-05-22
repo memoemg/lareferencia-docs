@@ -11,6 +11,11 @@ Instalación Ubuntu 18.04.2 LTS
 
 .. include:: vufind_ubuntu_installation.rst
 
+
+Personalización
+~~~~~~~~~~~~~~~
+.. include:: customizing.rst
+
 Tareas de mantenimiento
 ~~~~~~~~~~~~~~~~~~~~~~~
 .. include:: vufind_maintenance.rst
