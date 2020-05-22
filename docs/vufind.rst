@@ -14,7 +14,7 @@ Instalación Ubuntu 18.04.2 LTS
 
 Personalización
 ~~~~~~~~~~~~~~~
-.. include:: customizing.rst
+.. include:: vufind_customizing.rst
 
 Tareas de mantenimiento
 ~~~~~~~~~~~~~~~~~~~~~~~
