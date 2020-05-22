@@ -15,7 +15,7 @@ Al definir el nombre del nuevo módulo, se creará un *namespace* y un directori
 Las modificaciones en la configuración se realizarán en :rubric:/module/nombreDelModulo/config/module.config.php. 
 Las modificaciones al código fuente se realizarán en :rubric:/module/nombreDelModulo/src/nombreDelModulo.
 
-*NOTA: El código fuente nuevo debe estar bajo un *namespace* PHP que corresponda con el nombre del módulo.
+NOTA: El código fuente nuevo debe estar bajo un *namespace* PHP que corresponda con el nombre del módulo.
 
 Extensión de la clase SolrDefault
 ---------------------------------
