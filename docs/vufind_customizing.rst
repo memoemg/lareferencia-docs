@@ -38,6 +38,7 @@ La información utilizada por estas plantillas es obtenida por *RecordDriver*, l
 *RecordDriver* obtiene la información de los campos dentro del índice a través de sus *fields*.
 
 Para hacer visible un nuevo campo en la vista del Record es necesario:
+
   * Hacer disponible el dato para VuFind
   * Hacer el dato accesible através de un *RecordDriver*
   * Desplegar el dato en el template
