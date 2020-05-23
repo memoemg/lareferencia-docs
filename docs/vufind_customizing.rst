@@ -135,7 +135,9 @@ Lo último que debe realizarse es editar el archivo $VUFIND_HOME/module/LARefere
 Habilitación de un SolrDefault distinto
 ---------------------------------------
 
-Si dentro del mismo módulo se poseen diferentes implementaciones de la clase SolrDefault, por ejemplo un archivo SolrLAReferencia.php y otro SolrIBCT.php.  Es posible cambiar entre ellos y de esta forma variar los campos mostrados en la vista del *record*.  Para realizar esta habilitación basta con cambiar el nombre del archivo llamado en module.config.php
+Si dentro del mismo módulo se poseen diferentes implementaciones de la clase SolrDefault, por ejemplo un archivo SolrLAReferencia.php y otro SolrIBCT.php.  Es posible cambiar entre ellos y de esta forma cambiarán la implementación de los *gets* de las funciones invocadas en RecordDataFormatterFactory para mostrar en la vista del *record*.  
+
+Para realizar esta habilitación basta con cambiar el nombre del archivo llamado en module.config.php
 
 .. code-block:: php
 
