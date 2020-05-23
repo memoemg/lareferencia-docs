@@ -23,9 +23,12 @@ NOTA: El código fuente nuevo debe estar bajo un *namespace* PHP que corresponda
 Extensión de la clase SolrDefault
 ---------------------------------
 
+Debe ejecutar el siguiente comando
+
 .. code-block:: console
 
    php public/index.php generate extendclass --extendfactory VuFind\\RecordDriver\\SolrDefault LAReferencia
+   
    Saved file: /usr/local/vufind/module/LAReferencia/src/LAReferencia/RecordDriver/SolrDefault.php
    Saved file: /usr/local/vufind/module/LAReferencia/src/LAReferencia/RecordDriver/SolrDefaultFactory.php
    Successfully updated /usr/local/vufind/module/LAReferencia/config/module.config.php
@@ -95,6 +98,8 @@ Luego se crea el siguiente archivo $VUFIND_HOME/module/LAReferencia/src/LARefere
          return $spec->getArray();
       }
    }
+   
+El código anterior incluye una nueva línea en el *display* de los metadatos, con la etiqueta "Country" y el valor regresado por la función getCountry.
 
 Lo último que debe realizarse es editar el archivo $VUFIND_HOME/module/LAReferencia/config/module.config.php de forma que se incluya específicamente el archivo SolrLAReferencia para uso del módulo:
 
@@ -114,7 +119,7 @@ Lo último que debe realizarse es editar el archivo $VUFIND_HOME/module/LARefere
            ),
            'aliases' => 
            array (
-             'VuFind\\RecordDriver\\SolrDefault' => **'LAReferencia\\RecordDriver\\SolrLAReferencia'**,
+             'VuFind\\RecordDriver\\SolrDefault' => 'LAReferencia\\RecordDriver\\SolrLAReferencia',
            ),
          ),
       ),
