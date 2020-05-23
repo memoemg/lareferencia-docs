@@ -7,6 +7,7 @@ Es posible sobreescribir estas configuraciones mediante la creación de un módu
 Para crear el módulo LAReferencia se debe ejecutar nuevamente el script *install*.
 
 .. code-block:: console
+
    cd $VUFIND_HOME
    php install.php
 
@@ -40,13 +41,13 @@ La información utilizada por estas plantillas es obtenida por *RecordDriver*, l
 
 *RecordDriver* obtiene la información de los campos dentro del índice a través de sus *fields*.
 
-Para hacer visible un nuevo campo en la vista del Record es necesario:
+Para hacer visible un nuevo campo en la vista del *record* es necesario:
 
   * Hacer disponible el dato para VuFind
   * Hacer el dato accesible através de un *RecordDriver*
   * Desplegar el dato en la vista del *record*
 
-1)Hacer disponible el dato para VuFind:
+1)Hacer el dato disponible para VuFind:
 
 El nuevo dato debe estar indexado en el índice SOLR.  Debe corroborarse que se encuentre en el schema.xml.
 
@@ -68,10 +69,10 @@ En el caso del módulo LAReferencia el archivo se encuentra en /usr/local/vufind
       $value = $this->fields["network_name_str"];
       return $value;
    }
-
+ 
 3) Desplegar el dato en la vista del *record*:
 
-Finalmente para que este nuevo campo se visualice en la página del *record*, debe modificarse el *RecordDataFormatter*.
+Finalmente para que este nuevo campo se visualice en la página del *record*, debe modificarse el *RecordDataFormatter*.  Este es el responsable de la forma en la que se muestran los metadatosn del *record*.
 
 Para lograrlo se crea el siguiente directorio:
 
@@ -83,16 +84,16 @@ Luego se crea el siguiente archivo $VUFIND_HOME/module/LAReferencia/src/LARefere
 .. code-block:: php
 
    <?php
-   namespace LAReferencia\View\Helper\Root;
-   use VuFind\View\Helper\Root\RecordDataFormatter\SpecBuilder;
-   class RecordDataFormatterFactory extends \VuFind\View\Helper\Root\RecordDataFormatterFactory
+    namespace LAReferencia\View\Helper\Root;
+    use VuFind\View\Helper\Root\RecordDataFormatter\SpecBuilder;
+    class RecordDataFormatterFactory extends \VuFind\View\Helper\Root\RecordDataFormatterFactory
    {
         public function getDefaultCoreSpecs()
       {
-            $spec = new SpecBuilder(parent::getDefaultCoreSpecs());
-            $spec->setLine('País', '**getCountry**');
-            return $spec->getArray();
-        }
+         $spec = new SpecBuilder();
+         $spec->setLine('Country', 'getCountry');
+         return $spec->getArray();
+      }
    }
 
 Lo último que debe realizarse es editar el archivo $VUFIND_HOME/module/LAReferencia/config/module.config.php de forma que se incluya específicamente el archivo SolrLAReferencia para uso del módulo:
