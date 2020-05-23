@@ -51,7 +51,22 @@ El nuevo dato debe estar indexado en el índice SOLR.  Debe corroborarse que se 
 
 2) Hacer el dato accesible através de un *RecordDriver*:
 
-Si el campo es totalmente nuevo y desconocido para VuFind, es necesario programar un método get específico para su recuperación.  Este método se agregará a la clase SolrDefault.php del módulo.  En el caso del módulo LAReferencia el archivo se llama SolrLAReferencia.php.  
+Si el campo es totalmente nuevo y desconocido para VuFind, es necesario programar un método get específico para su recuperación.  Este método debe agregarse a la clase SolrDefault.php del módulo.  
+
+En el caso del módulo LAReferencia el archivo se encuentra en /usr/local/vufind/module/LAReferencia/src/LAReferencia/RecordDriver/ y se llama SolrLAReferencia.php
+
+.. code-block:: console
+
+   <?php
+   namespace LAReferencia\RecordDriver;
+   class SolrLAReferencia extends SolrDefault
+   {
+   public function getCountry()
+   {
+      $value = null;
+      $value = $this->fields["network_name_str"];
+      return $value;
+   }
 
 3) Desplegar el dato en el template apropiado
 
