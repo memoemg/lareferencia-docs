@@ -50,15 +50,21 @@ Para hacer visible un nuevo campo en la vista del *record* es necesario:
   * Hacer el dato accesible através de un *RecordDriver*
   * Desplegar el dato en la vista del *record*
 
-1)Hacer el dato disponible para VuFind:
+1) Hacer el dato disponible para VuFind:
 
-El nuevo dato debe estar indexado en el índice SOLR.  Debe corroborarse que se encuentre en el schema.xml.
+El nuevo dato debe estar indexado en el índice SOLR.  Debe corroborarse que se encuentre en el schema.xml.  Si este no forma parte del archivo $VUFIND_HOME/solr/vufind/biblio/conf/schema.xml debe entonces agregarse al índice por otro medio, por ejemplo mediante el archivo xoai2vufind4.xsl.
+
+.. code-block:: xml
+
+   <field name="network_name_str">
+      <xsl:value-of select="$networkName"/>
+   </field>
 
 2) Hacer el dato accesible através de un *RecordDriver*:
 
 Si el campo es totalmente nuevo y desconocido para VuFind, es necesario programar un método get específico para su recuperación.  Este método debe agregarse a la clase SolrDefault.php del módulo.  
 
-En el caso del módulo LAReferencia el archivo se encuentra en /usr/local/vufind/module/LAReferencia/src/LAReferencia/RecordDriver/ y se llama SolrLAReferencia.php
+En el caso del módulo LAReferencia el archivo se encuentra en $VUFIND_HOME/module/LAReferencia/src/LAReferencia/RecordDriver/ y se llama SolrLAReferencia.php
 
 .. code-block:: php
 
