@@ -107,23 +107,23 @@ Lo último que debe realizarse es editar el archivo $VUFIND_HOME/module/LARefere
 
    <?php
    return array (
-   'vufind' => 
-   array (
-       'plugin_managers' => 
+      'vufind' => 
       array (
-         'recorddriver' => 
-         array (
-         'factories' => 
-         array (
-             'LAReferencia\\RecordDriver\\SolrDefault' => 'LAReferencia\\RecordDriver\\SolrDefaultFactory',
-           ),
-           'aliases' => 
-           array (
-             'VuFind\\RecordDriver\\SolrDefault' => 'LAReferencia\\RecordDriver\\SolrLAReferencia',
+          'plugin_managers' => 
+          array (
+            'recorddriver' => 
+            array (
+              'factories' => 
+              array (
+                'LAReferencia\\RecordDriver\\SolrDefault' => 'LAReferencia\\RecordDriver\\SolrDefaultFactory',
+              ),
+              'aliases' => 
+              array (
+                'VuFind\\RecordDriver\\SolrDefault' => 'LAReferencia\\RecordDriver\\SolrLAReferencia',
+             ),
            ),
          ),
       ),
-   ),
    );
 
 Habilitación de un SolrDefault distinto
