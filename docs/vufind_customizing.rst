@@ -1,5 +1,5 @@
-Creación de un módulo
----------------------
+Creación del módulo LAReferencia
+--------------------------------
 
 Todas las rutas y servicios de VuFind se encuentran configuradas en /module/VuFind/config/module.config.php.
 Es posible sobreescribir estas configuraciones mediante la creación de un módulo personalizado.
@@ -12,10 +12,10 @@ Para crear el módulo LAReferencia se debe ejecutar nuevamente el script *instal
 
 **Precaución, si ha modificado el archivo httpd-vufind.conf los cambios se perderan y un archivo .bak será creado.
 
-Al definir el nombre del nuevo módulo, se creará un *namespace* y un directorio en el cual se almacenarán las configuraciones.  Específicamente:
+Al definir el nombre del nuevo módulo, en este caso **LAReferencia**, se creará un *namespace* y un directorio en el cual se almacenarán las configuraciones.  Específicamente:
 
-  * Las modificaciones en la configuración se realizarán en /module/nombreDelModulo/config/module.config.php. 
-  * Las modificaciones al código fuente se realizarán en /module/nombreDelModulo/src/nombreDelModulo.
+  * Las modificaciones a la configuración se realizan en /module/**LAReferencia**/config/module.config.php. 
+  * Las modificaciones al código fuente se realizan en /module/**LAReferencia**/src/**LAReferencia**.
 
 NOTA: El código fuente nuevo debe estar bajo un *namespace* PHP que corresponda con el nombre del módulo.
 
@@ -24,16 +24,17 @@ Extensión de la clase SolrDefault
 
 .. code-block:: console
 
-  php public/index.php generate extendclass VuFind\\RecordDriver\\SolrMarc ModuleName
-  php public/index.php generate extendclass --extendfactory VuFind\\RecordDriver\\SolrDefault LAReferencia
-  Saved file: /usr/local/vufind/module/LAReferencia/src/LAReferencia/RecordDriver/SolrDefault.php
-  Saved file: /usr/local/vufind/module/LAReferencia/src/LAReferencia/RecordDriver/SolrDefaultFactory.php
-  Successfully updated /usr/local/vufind/module/LAReferencia/config/module.config.php
+   php public/index.php generate extendclass --extendfactory VuFind\\RecordDriver\\SolrDefault LAReferencia
+   Saved file: /usr/local/vufind/module/LAReferencia/src/LAReferencia/RecordDriver/SolrDefault.php
+   Saved file: /usr/local/vufind/module/LAReferencia/src/LAReferencia/RecordDriver/SolrDefaultFactory.php
+   Successfully updated /usr/local/vufind/module/LAReferencia/config/module.config.php
+   Successfully updated /usr/local/vufind/module/LAReferencia/config/module.config.php
+
 
 Mostrar un campo nuevo en el Record
 -----------------------------------
 
-En VuFind todos los *displays* se realizan mediante las plantillas PHP de cada tema.
+En VuFind todos los *displays* se realizan mediante las plantillas PHP.
 
 La información utilizada por estas plantillas es obtenida por *RecordDriver*, la cual es una clase con muchos métodos públicos que recuperan la información en su mayoría desde el índice SOLR.
 
@@ -43,7 +44,7 @@ Para hacer visible un nuevo campo en la vista del Record es necesario:
 
   * Hacer disponible el dato para VuFind
   * Hacer el dato accesible através de un *RecordDriver*
-  * Desplegar el dato en el template
+  * Desplegar el dato en la vista del *record*
 
 1)Hacer disponible el dato para VuFind:
 
@@ -55,7 +56,7 @@ Si el campo es totalmente nuevo y desconocido para VuFind, es necesario programa
 
 En el caso del módulo LAReferencia el archivo se encuentra en /usr/local/vufind/module/LAReferencia/src/LAReferencia/RecordDriver/ y se llama SolrLAReferencia.php
 
-.. code-block:: console
+.. code-block:: php
 
    <?php
    namespace LAReferencia\RecordDriver;
@@ -68,26 +69,56 @@ En el caso del módulo LAReferencia el archivo se encuentra en /usr/local/vufind
       return $value;
    }
 
-3) Desplegar el dato en el template apropiado
+3) Desplegar el dato en la vista del *record*:
 
- <?php
-  namespace ModuleName\View\Helper\Root;
-  use VuFind\View\Helper\Root\RecordDataFormatter\SpecBuilder;
-  class RecordDataFormatterFactory extends \VuFind\View\Helper\Root\RecordDataFormatterFactory
- {
-     public function getDefaultCoreSpecs()
-     {
-         $spec = new SpecBuilder(parent::getDefaultCoreSpecs());
-         $spec->setLine('Record ID', 'getRecordID');
-         return $spec->getArray();
-     }
- }
- 
- <?php
- return [
-     'extends' => 'bootstrap3',
-     'helpers' => ['factories' => ['VuFind\View\Helper\Root\RecordDataFormatter' => 'ModuleName\View\Helper\Root\RecordDataFormatterFactory']],
- ];
+Finalmente para que este nuevo campo se visualice en la página del *record*, debe modificarse el *RecordDataFormatter*.
+
+Para lograrlo se crea el siguiente directorio:
+
+.. code-block:: console
+   mkdir -p $VUFIND_HOME/module/LAReferencia/src/LAReferencia/View/Helper/Root
+
+Luego se crea el siguiente archivo $VUFIND_HOME/module/LAReferencia/src/LAReferencia/View/Helper/Root/**RecordDataFormatterFactory.php** y se agrega el llamado al método get que se incluyó en el SolrLAReferencia.php:
+
+.. code-block:: php
+
+   <?php
+   namespace LAReferencia\View\Helper\Root;
+   use VuFind\View\Helper\Root\RecordDataFormatter\SpecBuilder;
+   class RecordDataFormatterFactory extends \VuFind\View\Helper\Root\RecordDataFormatterFactory
+   {
+        public function getDefaultCoreSpecs()
+      {
+            $spec = new SpecBuilder(parent::getDefaultCoreSpecs());
+            $spec->setLine('País', '**getCountry**');
+            return $spec->getArray();
+        }
+   }
+
+Lo último que debe realizarse es editar el archivo $VUFIND_HOME/module/LAReferencia/config/module.config.php de forma que se incluya específicamente el archivo SolrLAReferencia para uso del módulo:
+
+.. code-block:: php
+
+   <?php
+   return array (
+   'vufind' => 
+   array (
+       'plugin_managers' => 
+      array (
+         'recorddriver' => 
+         array (
+         'factories' => 
+         array (
+             'LAReferencia\\RecordDriver\\SolrDefault' => 'LAReferencia\\RecordDriver\\SolrDefaultFactory',
+           ),
+           'aliases' => 
+           array (
+             'VuFind\\RecordDriver\\SolrDefault' => **'LAReferencia\\RecordDriver\\SolrLAReferencia'**,
+           ),
+         ),
+      ),
+   ),
+   );
 
 Habilitación de un SolrDefault distinto
 ---------------------------------------
