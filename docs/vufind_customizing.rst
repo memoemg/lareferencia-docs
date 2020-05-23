@@ -7,7 +7,8 @@ Es posible sobreescribir estas configuraciones mediante la creación de un módu
 Para crear el módulo LAReferencia se debe ejecutar nuevamente el script *install*.
 
 .. code-block:: console
-  php install.php
+   cd $VUFIND_HOME
+   php install.php
 
 **Precaución, si ha modificado el archivo httpd-vufind.conf los cambios se perderan y un archivo .bak será creado.
 
@@ -23,6 +24,7 @@ Extensión de la clase SolrDefault
 
 .. code-block:: console
 
+  php public/index.php generate extendclass VuFind\\RecordDriver\\SolrMarc ModuleName
   php public/index.php generate extendclass --extendfactory VuFind\\RecordDriver\\SolrDefault LAReferencia
   Saved file: /usr/local/vufind/module/LAReferencia/src/LAReferencia/RecordDriver/SolrDefault.php
   Saved file: /usr/local/vufind/module/LAReferencia/src/LAReferencia/RecordDriver/SolrDefaultFactory.php
@@ -44,14 +46,33 @@ Para hacer visible un nuevo campo en la vista del Record es necesario:
   * Desplegar el dato en el template
 
 1)Hacer disponible el dato para VuFind:
+
 El nuevo dato debe estar indexado en el índice SOLR.  Debe corroborarse que se encuentre en el schema.xml.
 
 2) Hacer el dato accesible através de un *RecordDriver*:
-Al agregar un nuevo campo es necesario agregar un getter method al record driver utilizado para desplegar los records.
-SolrDefault.  Al copiar un método de los ya existentes, debe tenerse en cuenta el detalle del return value: asegurarse si retorna un string cuando es single-valued y devolver un array cuando es multi-valued (propiedad del solr field).
+
+Si el campo es totalmente nuevo y desconocido para VuFind, es necesario programar un método get específico para su recuperación.  Este método se agregará a la clase SolrDefault.php del módulo.  En el caso del módulo LAReferencia el archivo se llama SolrLAReferencia.php.  
 
 3) Desplegar el dato en el template apropiado
-El paso final es hacerlo visible a través del template deseado.  "Record-relate templates are found in the RecordDriver folder of your chosen theme in a folder that corresponds with the name of the record driver class"
+
+ <?php
+  namespace ModuleName\View\Helper\Root;
+  use VuFind\View\Helper\Root\RecordDataFormatter\SpecBuilder;
+  class RecordDataFormatterFactory extends \VuFind\View\Helper\Root\RecordDataFormatterFactory
+ {
+     public function getDefaultCoreSpecs()
+     {
+         $spec = new SpecBuilder(parent::getDefaultCoreSpecs());
+         $spec->setLine('Record ID', 'getRecordID');
+         return $spec->getArray();
+     }
+ }
+ 
+ <?php
+ return [
+     'extends' => 'bootstrap3',
+     'helpers' => ['factories' => ['VuFind\View\Helper\Root\RecordDataFormatter' => 'ModuleName\View\Helper\Root\RecordDataFormatterFactory']],
+ ];
 
 Habilitación de un SolrDefault distinto
 ---------------------------------------
