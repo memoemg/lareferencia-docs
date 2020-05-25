@@ -52,7 +52,38 @@ Para hacer visible un nuevo campo en la vista del *record* es necesario:
 
 1) Hacer el dato disponible para VuFind:
 
-El nuevo dato debe estar indexado en el índice SOLR.  Debe corroborarse que se encuentre en el schema.xml.  Si este no forma parte del archivo $VUFIND_HOME/solr/vufind/biblio/conf/schema.xml debe entonces agregarse al índice por otro medio, por ejemplo mediante el archivo xoai2vufind4.xsl.
+El nuevo dato debe estar indexado en el índice SOLR.  Debe corroborarse que se encuentre en el archivo $VUFIND_HOME/solr/vufind/biblio/conf/schema.xml
+
+.. code-block:: xml
+
+   <!-- Generic Fields -->
+      <field name="language" type="string" indexed="true" stored="true" multiValued="true"/>
+      <field name="format" type="string" indexed="true" stored="true" multiValued="true"/>
+      <field name="author" type="textProper" indexed="true" stored="true" multiValued="true" termVectors="true"/>
+      <field name="author_variant" type="text" indexed="true" stored="true" multiValued="true" termVectors="true"/>
+      <field name="author_role" type="string" indexed="true" stored="true" multiValued="true"/>
+      <field name="author_facet" type="textFacet" indexed="true" stored="true" multiValued="true"/>
+      <field name="author_sort" type="string" indexed="true" stored="true"/>
+      <field name="title" type="text" indexed="true" stored="true"/>
+      <field name="title_sort" type="string" indexed="true" stored="true"/>
+      <field name="title_sub" type="text" indexed="true" stored="true"/>
+      <field name="title_short" type="text" indexed="true" stored="true"/>
+      <field name="title_full" type="text" indexed="true" stored="true"/>
+      <field name="title_full_unstemmed" type="textProper" indexed="true" stored="true"/>
+      <field name="title_fullStr" type="string" indexed="true" stored="true"/>
+      <field name="title_auth" type="text" indexed="true" stored="true"/>
+      <field name="physical" type="string" indexed="true" stored="true" multiValued="true"/>
+      <field name="publisher" type="textProper" indexed="true" stored="true" multiValued="true"/>
+      <field name="publisherStr" type="string" indexed="true" stored="false" multiValued="true"/>
+      <field name="publishDate" type="string" indexed="true" stored="true" multiValued="true"/>
+      <field name="publishDateSort" type="string" indexed="true" stored="false"/>
+      <field name="edition" type="string" indexed="true" stored="true"/>
+      <field name="description" type="text" indexed="true" stored="true"/>
+      <field name="contents" type="text" indexed="true" stored="true" multiValued="true"/>
+      <field name="url" type="string" indexed="false" stored="true" multiValued="true"/>
+      <field name="thumbnail" type="string" indexed="false" stored="true"/>
+
+Si este no forma parte del schema.conf debe entonces agregarse al índice por otro medio, por ejemplo mediante el archivo xoai2vufind4.xsl.
 
 .. code-block:: xml
 
@@ -74,9 +105,7 @@ En el caso del módulo LAReferencia el archivo se encuentra en $VUFIND_HOME/modu
    {
    public function getCountry()
    {
-      $value = null;
-      $value = $this->fields["network_name_str"];
-      return $value;
+      return $this->getFieldValue("network_name_str");
    }
  
 3) Desplegar el dato en la vista del *record*:
@@ -92,18 +121,37 @@ Luego se crea el siguiente archivo $VUFIND_HOME/module/LAReferencia/src/LARefere
 
 .. code-block:: php
 
-   <?php
-    namespace LAReferencia\View\Helper\Root;
-    use VuFind\View\Helper\Root\RecordDataFormatter\SpecBuilder;
-    class RecordDataFormatterFactory extends \VuFind\View\Helper\Root\RecordDataFormatterFactory
-   {
-        public function getDefaultCoreSpecs()
-      {
-         $spec = new SpecBuilder();
-         $spec->setLine('Country', 'getCountry');
-         return $spec->getArray();
-      }
-   }
+ <?php
+ 
+ namespace ModuleName\View\Helper\Root;
+ 
+ use VuFind\View\Helper\Root\RecordDataFormatter\SpecBuilder;
+ 
+ class RecordDataFormatterFactory extends \VuFind\View\Helper\Root\RecordDataFormatterFactory
+ {
+     public function getDefaultCoreSpecs()
+  {
+      $spec = new RecordDataFormatter\SpecBuilder();
+      $spec->setTemplateLine(
+          'Published in', 'getContainerTitle', 'data-containerTitle.phtml'
+      );
+      $spec->setLine(
+          'New Title', 'getNewerTitles', null, ['recordLink' => 'title']
+      );
+
+      $spec->setLine(
+          'Country', 'getCountry');
+      
+      $spec->setLine(
+          'Access Level', 'getAccessLevel');
+
+      $spec->setLine(
+          'Previous Title', 'getPreviousTitles', null, ['recordLink' => 'title']
+      );
+
+      $spec->setLine(
+          'Publication Date', 'getPublicationDates');
+ }
    
 El código anterior incluye una nueva línea en el *display* de los metadatos, con la etiqueta "Country" y el valor regresado por la función getCountry.
 
@@ -145,4 +193,4 @@ Para realizar esta habilitación basta con cambiar el nombre del archivo llamado
    ...
    'aliases' => 
       array (
-         'VuFind\\RecordDriver\\SolrDefault' => 'LAReferencia\\RecordDriver\\SolrIBCT',
+         'VuFind\\RecordDriver\\SolrDefault' => 'LAReferencia\\RecordDriver\\SolrIBICT',
