@@ -194,3 +194,14 @@ Para realizar esta habilitación basta con cambiar el nombre del archivo llamado
    'aliases' => 
       array (
          'VuFind\\RecordDriver\\SolrDefault' => 'LAReferencia\\RecordDriver\\SolrIBICT',
+         
+
+Luego debe llamarse al archivo RecordFormatter asociado desde el archivo theme.config.php en el tema utilizado.  Por ejemplo:
+
+.. code-block:: php
+
+   <?php
+   return [
+       'extends' => 'bootstrap3',
+       'helpers' => ['factories' => ['VuFind\View\Helper\Root\RecordDataFormatter' => 'LAReferencia\View\Helper\Root\RecordDataFormatterFactoryIBICT']],
+   ];
