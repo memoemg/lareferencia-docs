@@ -196,7 +196,7 @@ Para realizar esta habilitación basta con cambiar el nombre del archivo llamado
          'VuFind\\RecordDriver\\SolrDefault' => 'LAReferencia\\RecordDriver\\SolrIBICT',
          
 
-Luego debe llamarse al archivo RecordFormatter asociado desde el archivo theme.config.php en el tema utilizado.  Por ejemplo:
+Luego debe llamarse al archivo RecordDataFormatter correspondiente desde el archivo theme.config.php en el tema utilizado.  Por ejemplo:
 
 .. code-block:: php
 
