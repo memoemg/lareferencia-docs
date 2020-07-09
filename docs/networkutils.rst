@@ -15,11 +15,17 @@ En este archivo deben configurarse los datos para la conexión con la base de da
   spring.datasource.username=usuario
   spring.datasource.password=contraseña
 
-Luego, en el directorio /home/lareferencia/lrharvester/networkutils debe ejecutarse:
+Luego, en el directorio /home/lareferencia/lrharvester/backend debe ejecutarse:
 
 .. code-block:: console
 
   mvn clean package install -DskipTests
+  
+Seguidamente, en el directorio /home/lareferencia/lrharvester/networkutils debe ejecutarse:
+
+.. code-block:: console
+
+  mvn clean package
 
 Esto compilará la aplicación y creará el directorio target.
 
