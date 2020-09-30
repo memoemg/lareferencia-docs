@@ -205,3 +205,83 @@ Luego debe llamarse al archivo RecordDataFormatter correspondiente desde el arch
        'extends' => 'bootstrap3',
        'helpers' => ['factories' => ['VuFind\View\Helper\Root\RecordDataFormatter' => 'LAReferencia\View\Helper\Root\RecordDataFormatterFactoryIBICT']],
    ];
+
+
+Adición de pestañas (tabs) en la vista del record
+-------------------------------------------------
+
+En el módulo Vufind, en el directorio src/VuFind/RecordTab se agregaron los archivos Core.php y OpenAIRE.php.
+
+Estas clases PHP lo que contienen únicamente es la implementación de la función getDescription() la cual retorna un String con la descripción del Tab.
+
+En el archivo PluginManager.php se procedió a agregar estas clases en los arreglos 
+
+.. code-block:: php
+
+   $aliases:
+
+   'core' => Core::class,
+   'openaire' => OpenAIRE::class,
+ 
+   $factories:
+
+   Core::class => InvokableFactory::class,
+   OpenAIRE::class => InvokableFactory::class,
+ 
+Posteriormente se creó el contenido de las pestañas en los respectivos archivos core.phtml y openaire.phtml en el tema LAReferencia (themes/LAReferencia/RecordTab)
+ 
+Finalmente para habilitarlas se debió modificar el archivo RecordTabs.ini
+
+.. code-block:: console
+
+   [VuFind\RecordDriver\SolrDefault]
+   tabs[Description] = Description
+   tabs[OpenAIRE] = OpenAIRE
+   tabs[Core] = Core
+   
+Mostrar más metadatos en el API Search
+--------------------------------------
+
+Se debe editar el archivo de configuración SearchApiRecordFields.yaml.  Al agregarle "vufind.default: true" a un campo en específico, éste se mostrará en la salida del API para cada record.
+
+.. code-block:: console
+
+   summary:
+   vufind.method: getSummary
+   vufind.default: true
+   description: Summary
+   type: array
+   items:
+       type: string
+
+La anterior modificación permite mostrar el summary en el JSON del API
+
+.. code-block:: console
+
+           [
+             "CIENCIAS NATURALES Y EXACTAS"
+           ]
+         ],
+         "summary": [
+            "We study the distinguishability notion given by Wootters for states represented by probability density functions. This presents the particularity that it can also be used for defining a statistical...
+
+También es posible agregar nuevos campos, si estos ya son disponibles para el SOLRDefault.  Por ejemplo, para mostrar el país desde donde es cosechado el record:
+
+.. code-block:: console
+
+   country:
+   vufind.method: getCountry
+   vufind.default: true
+   description: country name from where it is harvested
+   type: string
+
+Producirá la siguiente salida en el API Search Record
+
+.. code-block:: console
+
+   "corporate": []
+   },
+   "country": "Argentina",
+   "formats": [
+   "article"
+   ],
